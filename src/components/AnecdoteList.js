@@ -5,8 +5,21 @@ import { voteAnecdote  } from '../reducers/anecdoteReducer'
 import { setNote, clearNote } from '../reducers/notificationReducer'
 
 class AnecdoteList extends React.Component {
+
+
   render() {
-    const anecdotes = this.props.anecdotes
+    const anecdotesToShow = () => {
+      console.log('anecdotesToShow')
+      console.log(this.props.filter.content)
+      if(this.props.filter.content === ''){
+        return this.props.anecdotes
+      }
+
+      return this.props.anecdotes
+        .filter(a => a.content.includes(this.props.filter.content))
+    }
+
+    const anecdotes = anecdotesToShow()
     return (
       <div>
         <h2>Anecdotes</h2>
@@ -36,7 +49,8 @@ class AnecdoteList extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    anecdotes: state.anecdotes
+    anecdotes: state.anecdotes,
+    filter: state.filter
   }
 }
 
